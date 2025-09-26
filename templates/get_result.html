@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Messages</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/light.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Submitted Messages</h1>
+        
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        
+        {% if messages %}
+            <table class="message-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Message</th>
+                        <th>Priority</th>
+                        <th>Type</th>
+                        <th>Agreed to Terms</th>
+                        <th>Submitted At</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for message in messages %}
+                    <tr>
+                        <td>{{ message[0] }}</td>
+                        <td>{{ message[1] }}</td>
+                        <td>{{ message[2] }}</td>
+                        <td>{{ message[3] }}</td>
+                        <td>{{ message[4] }}</td>
+                        <td>{{ message[5] }}</td>
+                        <td>{{ "Yes" if message[6] else "No" }}</td>
+                        <td>{{ message[7] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <div class="no-messages">
+                <p>No messages have been submitted yet.</p>
+            </div>
+        {% endif %}
+        
+        <p style="margin-top: 20px; text-align: center;">
+            <a href="{{ url_for('index') }}">Back to Contact Form</a>
+        </p>
+    </div>
+</body>
+</html>
